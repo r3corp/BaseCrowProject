@@ -17,4 +17,9 @@ public:
     virtual void save(const User& user) = 0;
 
     virtual std::vector<User> getAll(void) = 0;
+
+    virtual void remove(int id) = 0;
+    
+    virtual void update(const User& user) = 0;
+
 };

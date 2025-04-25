@@ -60,3 +60,23 @@ void UserRepository::save(const User& user) {
   }
   sqlite3_finalize(stmt);
 }
+
+void UserRepository::remove(int id) {
+  sqlite3_stmt* stmt;
+  if (sqlite3_prepare_v2(db, "DELETE FROM users WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
+      sqlite3_bind_int(stmt, 1, id);
+      sqlite3_step(stmt);
+  }
+  sqlite3_finalize(stmt);
+}
+
+void UserRepository::update(const User& user) {
+  sqlite3_stmt* stmt;
+  if (sqlite3_prepare_v2(db, "UPDATE users SET name = ?, email = ? WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
+      sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);
+      sqlite3_bind_text(stmt, 2, user.email.c_str(), -1, SQLITE_TRANSIENT);
+      sqlite3_bind_int(stmt, 3, user.id);
+      sqlite3_step(stmt);
+  }
+  sqlite3_finalize(stmt);
+}

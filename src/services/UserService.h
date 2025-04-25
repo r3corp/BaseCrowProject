@@ -10,6 +10,10 @@ class UserService {
   public:
       UserService(std::shared_ptr<UserRepository> repo);
       std::string getAllUsersJson();
+      std::string getUserJson(int id);
+      std::string createUser(const std::string& userJson);
+      std::string updateUser(int id, const std::string& userJson);
+      void deleteUser(int id);
   private:
       std::shared_ptr<UserRepository> repository;
   };

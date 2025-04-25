@@ -18,4 +18,42 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
       ctx["users"] = users;
       return crow::mustache::load("users.mustache").render(ctx);
   });
+  
+  CROW_ROUTE(app, "/users/<int>")([&service](int id) {
+        return crow::response{service.getUserJson(id)};
+  });
+
+  CROW_ROUTE(app, "/users/<int>/html")([&service](int id) {
+      auto user = service.getUserJson(id);
+      crow::mustache::context ctx;
+      ctx["user"] = user;
+      return crow::mustache::load("user.mustache").render(ctx);
+  });
+
+  CROW_ROUTE(app, "/users/<int>").methods("DELETE"_method)([&service](const crow::request& req, int id) {
+        service.deleteUser(id);
+        return crow::response{200};
+  });
+
+  CROW_ROUTE(app, "/users/save").methods("POST"_method)([&service](const crow::request& req) {
+        auto user = service.createUser(req.body);
+        return crow::response{user};
+  });
+
+  CROW_ROUTE(app, "/users/<int>").methods("PUT"_method)([&service](const crow::request& req, int id) {
+        auto user = service.updateUser(id, req.body);
+        return crow::response{user};
+  });
+
+  CROW_ROUTE(app, "/users/<int>/html").methods("PUT"_method)([&service](const crow::request& req, int id) {
+      auto user = service.updateUser(id, req.body);
+      crow::mustache::context ctx;
+      ctx["user"] = user;
+      return crow::mustache::load("user.mustache").render(ctx);
+  });
+
+  CROW_ROUTE(app, "/users/new")([]() {
+      crow::mustache::context ctx;
+      return crow::mustache::load("new_user_form.mustache").render(ctx);
+  });
 }

@@ -59,4 +59,9 @@ public:
   void save(const User& user) override;
 
   std::vector<User> getAll(void) override;
+
+  void remove(int id) override;
+
+  void update(const User& user) override;
+
 };
