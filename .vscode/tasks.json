@@ -9,6 +9,10 @@
         "-g",
         "${file}",
         "-std=c++20",
+        "-g",
+        "${workspaceFolder}/src/db/UserRepository.cpp",
+        "${workspaceFolder}/src/rest/ApiRouter.cpp",
+        "${workspaceFolder}/src/services/UserService.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}",
         "-lsqlite3"

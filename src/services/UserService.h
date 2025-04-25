@@ -1,5 +1,9 @@
+#pragma once
 #include "../db/UserRepository.h"
 #include <string>
+#include "crow.h"
+#include "crow/json.h"
+
 
 // src/services/UserService.h
 class UserService {

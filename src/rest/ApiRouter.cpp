@@ -7,7 +7,7 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
     });
 
     CROW_ROUTE(app, "/users/html")([&service]() {
-        auto users = service.getAllUsers();
+        auto users = service.getAllUsersJson();
         crow::mustache::context ctx;
         ctx["users"] = users;
         return crow::mustache::load("users.mustache").render(ctx);

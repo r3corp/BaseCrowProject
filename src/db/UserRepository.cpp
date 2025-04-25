@@ -17,7 +17,7 @@ std::vector<User> UserRepository::getAll() {
   return users;
 }
 
-std::optional<User> UserRepository::findById(int id) override {
+std::optional<User> UserRepository::findById(int id) {
   sqlite3_stmt* stmt;
   User user;
   if (sqlite3_prepare_v2(db, "SELECT name, email FROM users WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
@@ -34,7 +34,7 @@ std::optional<User> UserRepository::findById(int id) override {
   return std::nullopt;
 }
 
-std::optional<User> UserRepository::findUserByName(const std::string& userName) override{
+std::optional<User> UserRepository::findUserByName(const std::string& userName) {
   sqlite3_stmt* stmt;
   User user;
   if (sqlite3_prepare_v2(db, "SELECT id, name, email FROM users WHERE name = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
@@ -51,7 +51,7 @@ std::optional<User> UserRepository::findUserByName(const std::string& userName) 
   return std::nullopt;
 }
 
-void UserRepository::save(const User& user) override {
+void UserRepository::save(const User& user) {
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "INSERT INTO users (name, email) VALUES (?, ?);", -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);
