@@ -1,6 +1,9 @@
 #pragma once
 #include "crow.h"
 #include "../services/UserService.h"
+#include <filesystem>
+#include <string>
+
 
 class ApiRouter {
 public:

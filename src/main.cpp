@@ -6,7 +6,6 @@
 
 int main() {
     crow::SimpleApp app;
-    //Database::init("users.db");
     auto repo = std::make_shared<UserRepository>();
     UserService service(repo);
     ApiRouter::setup(app, service);
