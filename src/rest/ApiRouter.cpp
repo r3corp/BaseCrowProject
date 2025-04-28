@@ -8,9 +8,14 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
   //std::string viewsPath = basePath;
   //crow::mustache::set_base(viewsPath);
 
+  CROW_ROUTE(app, "/")([&service]() {
+    //crow::mustache::context ctx;
+    return crow::mustache::load("index.mustache").render();//ctx);
+  });
+
   CROW_ROUTE(app, "/users")([&service]() {
-        return crow::response{service.getAllUsersJson()};
-    });
+    return crow::response{service.getAllUsersJson()};
+  });
 
   CROW_ROUTE(app, "/users/html")([&service]() {
       auto users = service.getAllUsersJson();
