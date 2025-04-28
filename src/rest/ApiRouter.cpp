@@ -1,6 +1,20 @@
 #include "ApiRouter.h"
-#include "crow/mustache.h"
 
+crow::json::wvalue ApiRouter::parseUrlEncodedToJson(const std::string& body) {
+  crow::json::wvalue result;
+  std::istringstream ss(body);
+  std::string pair;
+
+  while (std::getline(ss, pair, '&')) {
+      auto pos = pair.find('=');
+      if (pos != std::string::npos) {
+          auto key = pair.substr(0, pos);
+          auto value = pair.substr(pos + 1);
+          result[key] = value;
+      }
+  }
+  return result;
+}
 
 void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
 
@@ -41,8 +55,12 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
   });
 
   CROW_ROUTE(app, "/users/save").methods("POST"_method)([&service](const crow::request& req) {
-        auto user = service.createUser(req.body);
-        return crow::response{user};
+        auto user_data = ApiRouter::parseUrlEncodedToJson(req.body);
+        /*if (!user_data) {
+            return crow::response{400}; // Bad Request
+        }*/
+        auto users = service.createUser(user_data);
+        return crow::response{users};
   });
 
   CROW_ROUTE(app, "/users/<int>").methods("PUT"_method)([&service](const crow::request& req, int id) {

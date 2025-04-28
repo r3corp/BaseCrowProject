@@ -30,14 +30,10 @@ std::string UserService::getUserJson(int id) {
     return "{}"; // Return empty JSON if not found
 }
 
-std::string UserService::createUser(const std::string& userJson) {
-    crow::json::rvalue user_data = crow::json::load(userJson);
-    if (!user_data) {
-        return "{}"; // Return empty JSON if invalid input
-    }
+std::string UserService::createUser(const crow::json::wvalue& userJson) {
     User new_user;
-    new_user.name = user_data["name"].s();
-    new_user.email = user_data["email"].s();
+//    new_user.name = userJson["username"].s();
+//    new_user.email = userJson["email"].s();
     repository->save(new_user);
     return getAllUsersJson(); // Return all users after creation
 }
