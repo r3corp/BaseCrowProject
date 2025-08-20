@@ -1,2 +1,5 @@
 // README.md - placeholder content
-audo apt install libboost-all-dev 
+at vscode
+- install cmake tools to compile
+- install Container tools and use it to launch a container with the code
+- 
