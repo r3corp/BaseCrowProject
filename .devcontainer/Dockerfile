@@ -1,7 +1,7 @@
 #FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y apt-utils pkg-config && apt-get install -y cmake build-essential git libasio-dev curl libcurl4-openssl-dev meson libbrotli-dev zlib1g zlib1g-dev libboost-all-dev
+RUN apt-get update && apt-get install -y apt-utils pkg-config && apt-get install -y cmake build-essential git libasio-dev curl libcurl4-openssl-dev meson libbrotli-dev zlib1g zlib1g-dev libboost-all-dev libsqlite3-dev gdb
 
 RUN git clone https://github.com/CrowCpp/Crow
 
@@ -33,8 +33,9 @@ RUN meson setup build                           \
 #        -DgRPC_BUILD_TESTS=OFF .. && \
 #        make -j8 install
 
-WORKDIR /
 
-RUN git clone https://github.com/r3corp/BaseCrowProject
+#WORKDIR /
 
-WORKDIR /BaseCrowProject
+#RUN git clone https://github.com/r3corp/BaseCrowProject
+
+#WORKDIR /BaseCrowProject
