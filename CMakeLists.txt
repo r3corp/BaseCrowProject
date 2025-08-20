@@ -36,3 +36,11 @@ endif()
 
 add_executable(CppCrudWebApp ${SOURCES})
 target_link_libraries(CppCrudWebApp PRIVATE Crow::Crow SQLite::SQLite3)
+
+add_custom_target(copy_templates ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/src/templates
+            ${CMAKE_BINARY_DIR}/templates
+)
+
+add_dependencies(CppCrudWebApp copy_templates)

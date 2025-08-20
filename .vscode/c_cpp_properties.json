@@ -9,7 +9,9 @@
             "cStandard": "c17",
             "intelliSenseMode": "linux-gcc-x64",
             "cppStandard": "c++20",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+            //"compileCommands": "${workspaceFolder}/build/compile_commands.json"  ---at linux
+            //"compileCommands": "/workspaces/BaseCrowProject/build/"  --absolute
+            "compileCommands": "${workspaceFolder}/build/"
         }
     ],
     "version": 4
