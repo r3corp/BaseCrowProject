@@ -35,6 +35,7 @@
 
     .hamburger {
       font-size: 18px;
+      padding-left: 5px;
       cursor: pointer;
       margin-right: 10px;
       color: var(--crt-color, #ffea70);
@@ -149,6 +150,48 @@
         transparent 3px
       );
     }
+
+    .side-menu {
+    height: 100%;
+    width: 0; /* começa fechado */
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    background-color: #0d0a00;
+    border-right: 2px solid var(--crt-color, #ffea70);
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px; /* espaço abaixo da navbar */
+    box-shadow: inset 0 0 8px var(--crt-color, #ffea70);
+    z-index: 1000;
+  }
+
+  .side-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 12px;
+    color: var(--crt-color, #ffea70);
+    border-bottom: 1px solid var(--crt-color, #ffea70);
+    transition: 0.2s;
+  }
+
+  .side-menu a:hover {
+    background-color: #120f00;
+    box-shadow: inset 0 0 8px var(--crt-color, #ffea70);
+    color: var(--crt-color, #ffea70);
+    text-shadow: 0 0 6px var(--crt-color, #ffea70);
+  }
+
+  /* botão hamburguer */
+  .hamburger {
+    font-size: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--crt-color, #ffea70);
+    z-index: 1100;
+  }
   </style>
 </head>
 <body>
@@ -156,7 +199,14 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="align-items-center">
-      <span class="hamburger">&#9776;</span>
+      <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
+      <div id="sideMenu" class="side-menu">
+        <a href="#" onclick="toggleMenu()">Home</a>
+        <a href="https://www.linkedin.com/in/r3corp/" onclick="toggleMenu()">Linkedin</a>
+        <a href="https://github.com/r3corp" onclick="toggleMenu()">GIT</a>
+        <a href="https://github.com/r3corp/BaseCrowProject" onclick="toggleMenu()">GIT - This project</a>
+        <a href="http://web.r3corp.net/" onclick="toggleMenu()">Contact</a>
+      </div>
       <a class="navbar-brand" href="#">RODRIGO ROCHA</a>
     </div>
   </nav>
@@ -185,7 +235,7 @@
   <div class="content">
 
     <div class="box">
-        <p>This prototye was created using C++ with Crow api with SQLite as database folowing the architectural standars and designs.</p>
+        <p>This prototye was created using C++ with Crow restfull api with SQLite as database folowing the architectural standars and designs. It runs at a docker container and de development is also using docker and VScode.</p>
         <p> You can se the source code for it at https://github.com/r3corp/BaseCrowProject</p>
     </div>
 
@@ -207,7 +257,7 @@
       <p><strong>SS&C Technologies (2022 – Present):</strong> Integration Engineer – Maintained financial risk software, integrated systems, and enhanced C++/Python infra for global markets.</p>
       <p><strong>DevReady (2018 – 2019):</strong> C++ Developer – Built C++ Logstash interfaces, migrated legacy systems, developed Vue.js panels, automated with Ansible.</p>
       <p><strong>Sony (2009 – 2018):</strong> Sr. System Engineer – Delivered broadcast solutions, optimized real-time video systems, boosted windows 7/10 network transfer speeds by 300%.</p>
-      <p><strong>Accenture (2007 – 2009):</strong> C++ Developer – Managed telecom backends, reduced ETL import at Oracle from 4 days to 2h.</p>
+      <p><strong>Accenture (2007 – 2009):</strong> C++ Developer – Managed telecom backends, reduced ETL import at Oracle from 2 days to 2h.</p>
     </div>
 
     <h2 class="section-title">Education</h2>
@@ -226,8 +276,7 @@
   <script>
     let green = false;
     function toggleStyle() {
-      if (!green) {ll
-        
+      if (!green) {        
         document.body.style.setProperty("--crt-color", "#00ff66");
         document.body.style.setProperty("--crt-glow", "#00aa44");
       } else {
@@ -235,6 +284,17 @@
         document.body.style.setProperty("--crt-glow", "#d4a300");
       }
       green = !green;
+    }
+
+    function toggleMenu() {
+      let menu = document.getElementById("sideMenu");
+      if (menu.style.width === "200px") {
+        menu.style.width = "0";
+        menu.style.display = "none";
+      } else {
+        menu.style.display = "block";
+        menu.style.width = "200px"; // largura do menu aberto
+      }
     }
   </script>
 </body>
