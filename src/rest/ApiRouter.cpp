@@ -23,8 +23,17 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
   //crow::mustache::set_base(viewsPath);
 
   CROW_ROUTE(app, "/")([&service]() {
-    //crow::mustache::context ctx;
-    return crow::mustache::load("index.mustache").render();//ctx);
+    crow::mustache::context ctx;
+    StatisticsService &statService = StatisticsService::getInstance();
+    
+    ctx["os_name"] = "";//statService.getOSName();
+    ctx["kernel_version"] = "";//statService.getKernelVersion();
+    ctx["cpu_usage"] = statService.getCPUUsage();
+    ctx["total_memory"] = statService.getTotalMemory();
+    ctx["used_memory"] = statService.getUsedMemory();
+    ctx["uptime"] = statService.getUptime();
+
+    return crow::mustache::load("index.mustache").render(ctx);
   });
 
   CROW_ROUTE(app, "/users")([&service]() {

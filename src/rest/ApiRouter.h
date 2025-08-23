@@ -3,6 +3,7 @@
 #include "crow/utility.h"
 #include "crow/mustache.h"
 #include "../services/UserService.h"
+#include "../services/StatisticsService.h"
 #include <filesystem>
 #include <string>
 
