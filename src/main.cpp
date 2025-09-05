@@ -9,8 +9,8 @@
 int main() {
     crow::SimpleApp app;
     auto repo = std::make_shared<UserRepository>();
-    crow::logger::setLogLevel(crow::LogLevel::Debug);
+    crow::logger::setLogLevel(crow::LogLevel::Info);
     UserService service(repo);
     ApiRouter::setup(app, service);
-    app.port(80).multithreaded().run();
+    app.port(20180).multithreaded().run();
 }
