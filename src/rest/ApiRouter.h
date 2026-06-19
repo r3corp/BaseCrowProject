@@ -13,4 +13,5 @@ class ApiRouter {
 public:
     static void setup(crow::SimpleApp& app, UserService& service);
     static crow::json::wvalue parseUrlEncodedToJson(const std::string& body);
+
 };
