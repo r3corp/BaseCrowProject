@@ -17,6 +17,7 @@ User UserRepository::getUser(int id) {
 }
 
 void UserRepository::addUser(const User& user) {
+  TimerTicker ticker("UserRepository::addUser");
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "INSERT INTO users (name, email) VALUES (?, ?);", -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);
@@ -29,6 +30,7 @@ void UserRepository::addUser(const User& user) {
 }
 
 UserRepository::UserRepository() {
+  TimerTicker ticker("UserRepository::UserRepository");
   sqlite3_open("users.db", &db);
   char* errMsg = nullptr;
   sqlite3_exec(db,
@@ -37,6 +39,7 @@ UserRepository::UserRepository() {
 }
 
 std::vector<User> UserRepository::getAll() {
+  TimerTicker ticker("UserRepository::getAll");
   std::vector<User> users;
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "SELECT id, name, email FROM users;", -1, &stmt, nullptr) == SQLITE_OK) {
@@ -53,6 +56,7 @@ std::vector<User> UserRepository::getAll() {
 }
 
 std::optional<User> UserRepository::findById(int id) {
+  TimerTicker ticker("UserRepository::findById");
   sqlite3_stmt* stmt;
   User user;
   if (sqlite3_prepare_v2(db, "SELECT name, email FROM users WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
@@ -70,6 +74,7 @@ std::optional<User> UserRepository::findById(int id) {
 }
 
 std::optional<User> UserRepository::findUserByName(const std::string& userName) {
+  TimerTicker ticker("UserRepository::findUserByName");
   sqlite3_stmt* stmt;
   User user;
   if (sqlite3_prepare_v2(db, "SELECT id, name, email FROM users WHERE name = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
@@ -87,6 +92,7 @@ std::optional<User> UserRepository::findUserByName(const std::string& userName) 
 }
 
 void UserRepository::save(const User& user) {
+  TimerTicker ticker("UserRepository::save");
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "INSERT INTO users (name, email) VALUES (?, ?);", -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);
@@ -97,6 +103,7 @@ void UserRepository::save(const User& user) {
 }
 
 void UserRepository::remove(int id) {
+  TimerTicker ticker("UserRepository::remove");
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "DELETE FROM users WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_int(stmt, 1, id);
@@ -106,6 +113,7 @@ void UserRepository::remove(int id) {
 }
 
 void UserRepository::update(const User& user) {
+  TimerTicker ticker("UserRepository::update");
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(db, "UPDATE users SET name = ?, email = ? WHERE id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);

@@ -1,6 +1,7 @@
 #pragma once
 #include "../interfaces/IUserRepository.h"
 #include "../models/User.h"
+#include "../logging/TimerTicker.hpp"
 #include <sqlite3.h>
 #include <iostream>
 #include <memory>

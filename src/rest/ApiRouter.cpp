@@ -1,6 +1,7 @@
 #include "ApiRouter.h"
 
 crow::json::wvalue ApiRouter::parseUrlEncodedToJson(const std::string& body) {
+  TimerTicker ticker("ApiRouter::parseUrlEncodedToJson");
   crow::json::wvalue result;
   std::istringstream ss(body);
   std::string pair;
@@ -17,7 +18,7 @@ crow::json::wvalue ApiRouter::parseUrlEncodedToJson(const std::string& body) {
 }
 
 void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
-
+  TimerTicker ticker("ApiRouter::setup");
   //std::string basePath = std::filesystem::current_path().string();
   //std::string viewsPath = basePath;
   //crow::mustache::set_base(viewsPath);
@@ -78,5 +79,10 @@ void ApiRouter::setup(crow::SimpleApp& app, UserService& service) {
   CROW_ROUTE(app, "/users/new")([]() {
       crow::mustache::context ctx;
       return crow::mustache::load("new_user_form.mustache").render(ctx);
+  });
+
+  CROW_ROUTE(app, "/shutdown")([&]() {
+      app.stop();
+      return crow::response{200};
   });
 }

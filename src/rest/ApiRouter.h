@@ -3,6 +3,8 @@
 #include "crow/utility.h"
 #include "crow/mustache.h"
 #include "../services/UserService.h"
+#include "../logging/TimerTicker.hpp"
+
 #include <filesystem>
 #include <string>
 

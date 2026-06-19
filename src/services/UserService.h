@@ -1,5 +1,6 @@
 #pragma once
 #include "../db/UserRepository.h"
+#include "../logging/TimerTicker.hpp"
 #include <string>
 #include "crow.h"
 #include "crow/json.h"
