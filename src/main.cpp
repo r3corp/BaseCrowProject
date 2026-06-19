@@ -16,5 +16,4 @@ int main() {
     UserService service(repo);
     ApiRouter::setup(app, service);
     app.port(18080).multithreaded().run();
-
 }
