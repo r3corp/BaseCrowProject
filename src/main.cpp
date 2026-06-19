@@ -8,7 +8,6 @@
 
 
 int main() {
-    
     Logger::getInstance().info("Starting the application...");
     TimerTicker ticker("Application running");
     crow::SimpleApp app;
