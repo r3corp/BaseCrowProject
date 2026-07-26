@@ -1,2 +1,39 @@
+# Build output (CMake configura tudo dentro de build/, incluindo os
+# _deps/ do FetchContent do Crow e o compile_commands.json)
+build/
+out/
+cmake-build-*/
+
+# Artefatos de compilação, caso gerados fora de build/
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+compile_commands.json
+
+# Banco SQLite gerado em runtime pelo app (users.db) — nao e dado versionado
+*.db
+*.sqlite
+*.sqlite3
+
+# Prototipos zipados / artefatos avulsos
 *.zip
-build
+
+# IDE / editor
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code (anotações/config local do assistente, não é código do projeto)
+.claude/
+
+# SO
+.DS_Store
+Thumbs.db

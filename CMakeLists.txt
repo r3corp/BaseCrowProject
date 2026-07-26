@@ -18,7 +18,8 @@ include_directories(src
   src/interfaces
   src/models
   src/ui
-  src/utils)
+  src/utils
+  src/commands)
 
 file(GLOB_RECURSE SOURCES
   src/*.cpp
@@ -28,7 +29,9 @@ file(GLOB_RECURSE SOURCES
   src/interfaces/*.cpp
   src/models/*.cpp
   src/ui/*.cpp
-  src/utils/*.cpp)
+  src/utils/*.cpp
+  src/commands/*.cpp
+  src/commands/types/*.cpp)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the build type" FORCE)
