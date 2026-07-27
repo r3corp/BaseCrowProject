@@ -1,0 +1,8 @@
+<tr id="user-row-{{id}}">
+  <td>{{name}}</td>
+  <td>{{email}}</td>
+  <td class="row-actions">
+    <button class="btn" hx-get="/users/{{id}}/edit/html" hx-target="closest tr" hx-swap="outerHTML">Editar</button>
+    <button class="btn btn-danger" hx-delete="/users/{{id}}" hx-target="closest tr" hx-swap="outerHTML" hx-confirm="Remover usuário {{name}}?">Remover</button>
+  </td>
+</tr>

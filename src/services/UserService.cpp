@@ -54,3 +54,11 @@ std::string UserService::updateUser(int id, const std::string& userJson) {
 void UserService::deleteUser(int id) {
     repository->remove(id);
 }
+
+std::vector<User> UserService::getAllUsers() {
+    return repository->getAll();
+}
+
+std::optional<User> UserService::getUser(int id) {
+    return repository->findById(id);
+}

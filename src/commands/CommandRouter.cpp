@@ -1,5 +1,6 @@
 #include "CommandRouter.h"
 #include "../logging/TimerTicker.hpp"
+#include "../rest/ApiRouter.h"
 
 crow::json::wvalue CommandRouter::toJson(const Command& command) {
     crow::json::wvalue json;
@@ -14,7 +15,33 @@ crow::json::wvalue CommandRouter::toJson(const Command& command) {
     return json;
 }
 
-void CommandRouter::setup(crow::SimpleApp& app, CommandService& service) {
+std::string CommandRouter::renderStatus(const Command& command, UserService& userService) {
+    crow::mustache::context ctx;
+    ctx["id"] = command.id;
+    ctx["status"] = toString(command.status);
+    ctx["error"] = command.error;
+
+    bool stillRunning = command.status == CommandStatus::PENDING ||
+                         command.status == CommandStatus::PROCESSING ||
+                         command.status == CommandStatus::PARTIAL;
+    ctx["pending"] = stillRunning;
+    ctx["completed"] = command.status == CommandStatus::COMPLETED;
+    ctx["failed"] = command.status == CommandStatus::FAILED;
+
+    if (command.status == CommandStatus::COMPLETED) {
+        auto users = userService.getAllUsers();
+        std::vector<crow::json::wvalue> items;
+        items.reserve(users.size());
+        for (const auto& user : users) {
+            items.push_back(ApiRouter::userToJson(user));
+        }
+        ctx["users"] = std::move(items);
+    }
+
+    return crow::mustache::load("command_status.mustache").render(ctx).dump();
+}
+
+void CommandRouter::setup(crow::SimpleApp& app, CommandService& service, UserService& userService) {
     TimerTicker ticker("CommandRouter::setup");
 
     CROW_ROUTE(app, "/comandos").methods("POST"_method)([&service](const crow::request& req) {
@@ -41,6 +68,14 @@ void CommandRouter::setup(crow::SimpleApp& app, CommandService& service) {
             return crow::response{404, "{\"error\":\"comando nao encontrado\"}"};
         }
         return crow::response{200, CommandRouter::toJson(*command).dump()};
+    });
+
+    CROW_ROUTE(app, "/comandos/<string>/html")([&service, &userService](const std::string& id) {
+        auto command = service.getStatus(id);
+        if (!command) {
+            return crow::response{404, "comando nao encontrado"};
+        }
+        return crow::response{CommandRouter::renderStatus(*command, userService)};
     });
 
     CROW_ROUTE(app, "/comandos")([&service]() {

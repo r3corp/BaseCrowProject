@@ -30,7 +30,7 @@ int main() {
     CommandService commandService(commandRepository, commandQueue);
 
     ApiRouter::setup(app, service, commandService);
-    CommandRouter::setup(app, commandService);
+    CommandRouter::setup(app, commandService, service);
 
     app.port(18080).multithreaded().run();
 }

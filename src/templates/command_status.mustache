@@ -1,0 +1,16 @@
+{{#pending}}
+<div id="command-status-{{id}}" class="card" hx-get="/comandos/{{id}}/html" hx-trigger="every 1s" hx-swap="outerHTML">
+  <p class="status-pending">Criando usuário… ({{status}})</p>
+</div>
+{{/pending}}
+{{#completed}}
+<div id="command-status-{{id}}" class="card">
+  <p class="status-ok">✅ Usuário criado com sucesso.</p>
+</div>
+<tbody id="users-tbody" hx-swap-oob="true">{{#users}}{{>user_row.mustache}}{{/users}}</tbody>
+{{/completed}}
+{{#failed}}
+<div id="command-status-{{id}}" class="card">
+  <p class="status-error">❌ Erro ao criar usuário: {{error}}</p>
+</div>
+{{/failed}}

@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head><title>Users</title></head>
-<body>
-<h1>List of Users</h1>
-<ul>
-{{#users}}
-  <li>{{name}} ({{email}})</li>
-{{/users}}
-</ul>
-</body>
-</html>
+{{> _head.mustache}}
+{{> _nav.mustache}}
+  <h1>Usuários</h1>
+  <p><a class="btn btn-primary" href="/users/new">+ Novo usuário</a></p>
+  <table class="table">
+    <thead>
+      <tr><th>Nome</th><th>Email</th><th>Ações</th></tr>
+    </thead>
+    <tbody id="users-tbody">
+      {{#users}}{{>user_row.mustache}}{{/users}}
+    </tbody>
+  </table>
+{{> _foot.mustache}}

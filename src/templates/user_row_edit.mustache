@@ -1,0 +1,8 @@
+<tr id="user-row-{{id}}">
+  <td><input class="btn" style="cursor:text;" type="text" name="name" value="{{name}}" required></td>
+  <td><input class="btn" style="cursor:text;" type="email" name="email" value="{{email}}" required></td>
+  <td class="row-actions">
+    <button class="btn btn-primary" hx-put="/users/{{id}}/html" hx-include="closest tr" hx-target="closest tr" hx-swap="outerHTML">Salvar</button>
+    <button class="btn" hx-get="/users/{{id}}/row/html" hx-target="closest tr" hx-swap="outerHTML">Cancelar</button>
+  </td>
+</tr>

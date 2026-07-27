@@ -1,6 +1,7 @@
 # Build output (CMake configura tudo dentro de build/, incluindo os
 # _deps/ do FetchContent do Crow e o compile_commands.json)
 build/
+build-debug/
 out/
 cmake-build-*/
 
